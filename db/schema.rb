@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_18_181515) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_21_123051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,51 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_181515) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "chats", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "feedback_id"
+    t.bigint "subject_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["feedback_id"], name: "index_chats_on_feedback_id"
+    t.index ["subject_id"], name: "index_chats_on_subject_id"
+  end
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.bigint "test_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_feedbacks_on_test_id"
+  end
+
+  create_table "materials", force: :cascade do |t|
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.bigint "subject_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["subject_id"], name: "index_materials_on_subject_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.string "role"
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.text "answer"
+    t.datetime "created_at", null: false
+    t.bigint "test_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["test_id"], name: "index_questions_on_test_id"
+  end
+
   create_table "subjects", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "name"
@@ -50,6 +95,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_181515) do
     t.bigint "user_id", null: false
     t.index ["tutor_id"], name: "index_subjects_on_tutor_id"
     t.index ["user_id"], name: "index_subjects_on_user_id"
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "material_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["material_id"], name: "index_tests_on_material_id"
   end
 
   create_table "tutors", force: :cascade do |t|
@@ -72,6 +125,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_18_181515) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chats", "feedbacks"
+  add_foreign_key "chats", "subjects"
+  add_foreign_key "feedbacks", "tests"
+  add_foreign_key "materials", "subjects"
+  add_foreign_key "messages", "chats"
+  add_foreign_key "questions", "tests"
   add_foreign_key "subjects", "tutors"
   add_foreign_key "subjects", "users"
+  add_foreign_key "tests", "materials"
 end
