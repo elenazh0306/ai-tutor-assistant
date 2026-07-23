@@ -1,0 +1,14 @@
+<div> <!-- possible hero banner -->
+  <h1><%= @subject.name %></h1>
+</div>
+
+<div>
+  <!-- AI tutor chat goes here -->
+</div>
+
+<div> <!-- style this as a nice dashboard? -->
+  <%= link_to "Back to Subjects", subjects_path %>
+  <%= link_to "Create Study Materials", new_subject_material_path(@subject) %>
+  <%= link_to "Test me on this Subject", new_subject_test_path(@subject) %>
+  <%= link_to "Delete Subject", subject_path(@subject), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this subject?"} %>
+</div>

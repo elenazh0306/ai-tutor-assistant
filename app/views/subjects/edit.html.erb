@@ -1,0 +1,4 @@
+<h1>Edit this Subject's Title</h1>
+<p>Current title: <%= @subject.name %></p>
+<%= render partial: "form", locals: { subject: @subject } %>
+<%= link_to "Cancel Edit", subject_path(@subject) %>
