@@ -3,4 +3,5 @@ class Subject < ApplicationRecord
   belongs_to :tutor
   has_many :chats
   has_many :materials
+  has_many :tests
 end
