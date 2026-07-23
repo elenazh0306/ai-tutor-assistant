@@ -1,0 +1,42 @@
+<%= link_to "← #{@chat.subject.name}", subject_path(@chat.subject) %>
+
+<h1 id="chat_title"><%= @chat.title %></h1>
+
+<% if @chat.messages.empty? %>
+
+  <div id="new_message_container">
+    <%= simple_form_for [@chat, @message] do |f| %>
+      <%= f.input :content, label: "What do you want to learn today?", required: true, placeholder: "Explain the gravity law" %>
+      <%= f.button :submit, 'Send a message to your tutor', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+
+<% else %>
+  <div id="messages">
+    <% @chat.messages.each do |message| %>
+      <% if message.role == "user" %>
+        <div class="d-flex justify-content-end mb-2">
+          <div class="bg-white px-3 pb-0 pt-3 rounded-pill">
+            <%= message.content %>
+          </div>
+        </div>
+      <% elsif message.role == "assistant" %>
+        <div class="d-flex justify-content-start mb-5">
+          <div class="px-3 pb-0 pt-3">
+            <%= message.content %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div id="new_message_container">
+    <div id="new_message_container">
+      <%= simple_form_for [@chat, @message] do |f| %>
+        <%= f.input :content, label: "New message", required: true, placeholder: "Type a new message..." %>
+        <%= f.button :submit, 'Send a message to your tutor', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>

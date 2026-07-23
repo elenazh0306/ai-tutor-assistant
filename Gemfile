@@ -75,3 +75,5 @@ end
 gem "devise"
 
 gem "cloudinary"
+
+gem "ruby_llm", "~> 1.2.0"
