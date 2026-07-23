@@ -1,0 +1,13 @@
+<div> <!-- possible hero banner here -->
+  <h1>All your subjects here!</h1>
+</div>
+
+<% if @subjects.any? %> <!-- checking if the user even has any subjects yet -->
+  <% @subjects.each do |subject| %>
+    <h2><%= link_to subject.name, subject_path(subject) %></h2>
+  <% end %>
+<% else %> <!-- if the user has no subjects, we display this message -->
+  <p>You haven't created any study subjects yet!</p>
+<% end %>
+
+<%= link_to "Create a new Subject", new_subject_path %>

@@ -1,0 +1,7 @@
+<%= simple_form_for([subject, material]) do |f| %>
+  <%= f.input :title %>
+  <%= f.input :content %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "Cancel Edit", subject_material_path(subject, material) %>
