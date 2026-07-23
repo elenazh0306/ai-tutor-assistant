@@ -1,0 +1,17 @@
+<div> <!-- possible hero banner here -->
+  <h1>All your materials for <%= @subject.name %> here!</h1>
+</div>
+
+<% if @materials.any? %> <!-- checking if the user even has any materials yet -->
+  <% @materials.each do |material| %>
+    <!-- we pass both @subject and 'material' to the link helper because the path is /subjects/:subject_id/materials/:id -->
+    <h2><%= link_to material.title, subject_material_path(@subject, material) %></h2>
+  <% end %>
+<% else %> <!-- if the user has no subjects, we display this message -->
+  <p>You haven't created any study materials yet!</p>
+<% end %>
+
+<div> <!-- style this as a nice dashboard? -->
+  <%= link_to "Back to Subject", subject_path(@subject) %>
+  <%= link_to "Test me on this Subject", new_subject_test_path(@subject) %>
+</div>
