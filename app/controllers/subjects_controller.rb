@@ -1,4 +1,5 @@
 class SubjectsController < ApplicationController
+
   before_action :set_subject, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -6,6 +7,7 @@ class SubjectsController < ApplicationController
   end
 
   def show
+    @chats = @subject.chats
   end
 
   def new

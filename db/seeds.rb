@@ -7,6 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+puts "creating tutor and user"
+user = User.create!(email: "current_user@example.com", password: "111111")
+tutor = Tutor.create!(name: "Tutor")
+
+puts "creating subjects"
+Subject.create!(name: "biology", user: user, tutor: tutor)
+Subject.create!(name: "math", user: user, tutor: tutor)
+Subject.create!(name: "literature", user: user, tutor: tutor)
+puts "all done"
 user = User.find_or_initialize_by(email: "test@example.com")
 
 if user.new_record?
