@@ -1,0 +1,9 @@
+<h1>All Tests</h1>
+
+<ul>
+  <% @tests.each do |test| %>
+    <li><%= link_to test.title, subject_test_path(@subject, test) %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Create New Test", new_subject_test_path, class: "btn btn-primary" %>
