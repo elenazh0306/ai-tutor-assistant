@@ -6,6 +6,34 @@ class MaterialsController < ApplicationController
     @materials = @subject.materials # <-- @materials = Material.all would grab *all* materials in the entire database
   end
 
+  def llm_content(chat)
+    chat.messages.each do |message|
+      if message.role ==  "assistant"
+        return message.content
+      end
+    end
+  end
+
+  def new
+    @material = Material.new(content: params[:content])
+    @subject = Subject.find(params[:subject_id])
+    @chat = Chat.find(params[:chat_id])
+    @material.content = llm_content(@chat)
+
+  end
+
+
+  def create
+    @material = Material.new(material_params)
+    @subject = Subject.find(params[:id])
+    @material.subject = @subject
+    if @material.save
+      redirect_to subject_material_path(@subject, @material)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
   def show
   end
 

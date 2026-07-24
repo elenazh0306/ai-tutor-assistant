@@ -18,7 +18,9 @@ class ChatsController < ApplicationController
   # as a user I can enter a live chat / get / subjects/:id/chats/:id
   def show
     @chat = Chat.find(params[:id])
+    @subject = @chat.subject
     @messages = @chat.messages
     @message = Message.new
+    @material = Material.new
   end
 end

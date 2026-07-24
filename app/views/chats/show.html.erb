@@ -1,4 +1,4 @@
-<%= link_to "← #{@chat.subject.name}", subject_path(@chat.subject) %>
+<%= link_to "← #{@subject.name}", subject_path(@subject) %>
 
 <h1 id="chat_title"><%= @chat.title %></h1>
 
@@ -30,13 +30,22 @@
     <% end %>
   </div>
 
-  <div id="new_message_container">
+
     <div id="new_message_container">
       <%= simple_form_for [@chat, @message] do |f| %>
         <%= f.input :content, label: "New message", required: true, placeholder: "Type a new message..." %>
         <%= f.button :submit, 'Send a message to your tutor', class: 'btn btn-primary' %>
       <% end %>
     </div>
+
+
+   <div id="new_material_container">
+
+    <%= link_to 'Create a new material',
+            new_subject_material_path(@subject, chat_id: @chat.id ),
+            class: 'btn btn-primary' %>
+
+
 
   </div>
 <% end %>
