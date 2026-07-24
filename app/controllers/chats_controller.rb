@@ -23,4 +23,6 @@ class ChatsController < ApplicationController
     @message = Message.new
     @material = Material.new
   end
+
+
 end

@@ -38,7 +38,7 @@
       <% if @subject.materials.any? %>
         <ul>
           <% @subject.materials.each do |material| %>
-            <li><%= link_to material.id, subject_material_path(material) %></li>
+            <li><%= link_to material.title, subject_material_path(@subject, material) %></li>
           <% end %>
         </ul>
 
