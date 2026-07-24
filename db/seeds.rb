@@ -42,7 +42,7 @@ subject = Subject.find_or_create_by!(
   tutor: tutor
 )
 
-# commented out, because "material" is now an unsed variable
+# commented out, because "material" is now an unused variable
 # material = Material.find_or_create_by!(
 #  "title: "Test Material",
 # subject: subject
