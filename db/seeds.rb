@@ -7,6 +7,16 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# resetting the database
+puts "Cleaning existing records..."
+Test.destroy_all
+Material.destroy_all
+Subject.destroy_all
+User.destroy_all
+Tutor.destroy_all
+
+# seeding the database
 puts "creating tutor and user"
 user = User.create!(email: "current_user@example.com", password: "111111")
 tutor = Tutor.create!(name: "Tutor")
@@ -32,16 +42,17 @@ subject = Subject.find_or_create_by!(
   tutor: tutor
 )
 
-material = Material.find_or_create_by!(
-  title: "Test Material",
-  subject: subject
-) do |record|
-  record.content = "Ruby on Rails is a web application framework written in Ruby."
-end
+# commented out, because "material" is now an unsed variable
+# material = Material.find_or_create_by!(
+#  "title: "Test Material",
+# subject: subject
+# ) do |record|
+#  record.content = "Ruby on Rails is a web application framework written in Ruby."
+# end
 
 test = Test.find_or_create_by!(
   title: "Ruby on Rails Quiz",
-  material: material
+  subject: subject
 )
 
 puts "Seed completed."
