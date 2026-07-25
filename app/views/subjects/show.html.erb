@@ -60,6 +60,15 @@
 
       <% else %>
       <p>There are no tests yet</p>
+      <div id="new_test_container">
+
+      <%= link_to 'Create a new test',
+                new_subject_test_path(@subject, Test.new ),
+                class: 'btn btn-primary' %>
+
+
+
+      </div>
 
       <% end %>
     </div>

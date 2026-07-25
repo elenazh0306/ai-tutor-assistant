@@ -1,6 +1,6 @@
 class TestsController < ApplicationController
 
-  before_action :set_subject, only: [:index, :show, :edit, :update]
+  before_action :set_subject, only: [:index, :show, :new, :create]
   before_action :set_test, only: [:show, :destroy]
 
   def index
