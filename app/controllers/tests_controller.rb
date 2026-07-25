@@ -1,7 +1,9 @@
 class TestsController < ApplicationController
 
-  before_action :set_subject, only: [:index, :show, :new, :create]
+  before_action :set_subject, only: [:index, :show, :new, :create, :destroy]
   before_action :set_test, only: [:show, :destroy]
+
+  QUESTION_PROMPT = "You are a friendly examiner. Test the user's understanding of by generating 5 short questions in the form of a JSON array with a key 'question' and based on the following input:"
 
   def index
     @tests = Test.all
@@ -9,35 +11,38 @@ class TestsController < ApplicationController
 
   def show
     @feedback = Feedback.new
+    @questions = @test.questions
   end
 
   def new
-    @test = Test.new
+    @test = Test.new(subject: @subject, title: "#{@subject.name} Test")
+    test_materials = @subject.materials.pluck(:content).join("\n\n")
+    response = RubyLLM.chat.with_instructions(QUESTION_PROMPT).ask(test_materials)
+    @questions_array = JSON.parse(response.content)
+    @questions_array.each do |q|
+      @test.questions.build(
+        title: q["question"]
+      )
+    end
   end
 
   def create
-        # gather all the learning materials in one spot
-    test_materials = @subject.materials.pluck(:content).join("\n\n")
-    # create and save the parent Test
-    @test = Test.new(subject: @subject, title: "#{@subject.name} Test")
-    # the system prompt
-    system_prompt = "You are a friendly examiner. Test the user's understanding of by generating 5 short questions in the form of a JSON array and based on the following input:"
-    # get the LLM response
-    response = RubyLLM.chat.with_instructions(system_prompt).ask(test_materials)
-    # parse the response to get the individual questions and loop through the result
-    questions_array = JSON.parse(response.content)
-    questions_array.each do |question|
-      Question.create!(test: @test, content: question_text)
-    end
+    @test = Test.new(test_params)
+    @test.subject = @subject
+
     # redirect to the test page
-    redirect_to test_path(@test)
+    if @test.save
+      redirect_to subject_test_path(@subject, @test)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def destroy
 
     @test.destroy
 
-    redirect_to subject_tests_path, status: :see_other
+    redirect_to subject_path(@subject), status: :see_other
   end
 
   private
@@ -51,6 +56,8 @@ class TestsController < ApplicationController
   end
 
   def test_params
-    params.require(:test).permit(:title)
+    params.require(:test).permit(
+      :title,
+      questions_attributes: [:id, :title, :answer] )
   end
 end
