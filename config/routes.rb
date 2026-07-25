@@ -1,15 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-  authenticated :user do
-    root to: "subjects#index", as: :authenticated_root
-  end
+  root to: "pages#home"
 
-  unauthenticated do
-    devise_scope :user do
-      root to: "devise/sessions#new", as: :unauthenticated_root
-    end
-  end
-
+  
   resources :subjects do
     resources :materials
     resources :tests, except: [:edit, :update]
