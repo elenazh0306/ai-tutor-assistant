@@ -1,8 +1,24 @@
 <h1><%= @test.title %></h1>
 
+<%= simple_form_for [@test, @feedback] do |f| %>
+<% @test.questions.each_with_index do |question, index| %>
+  <div>
+    <!-- The question text becomes the label above the input box -->
+    <label>
+      Question <%= index + 1 %>: <%= question.content %>
+    </label>
+
+    <!-- The input box where the user types their specific answer -->
+    <input type="text" name="answers[<%= question.id %>]" required>
+  </div>
+<% end %>
+
+<%= f.submit "Submit Answers for Grading", class: "btn btn-primary" %>
+<% end %>
+
+  <%= f.submit "Submit Answers for Grading", class: "btn btn-primary" %>
+<% end %>
+
+
 <%= link_to "Back to Tests", subject_tests_path %>
 <%= link_to "Delete Test", subject_test_path(@subject, @test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-
-
-
-<%# Test with Answers %>
