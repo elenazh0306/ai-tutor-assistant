@@ -1,3 +1,3 @@
 class UsersController < ApplicationController
-  # before_action :authenticate_user! <--- commented out for testing purposes!
+  before_action :authenticate_user!
 end
