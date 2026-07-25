@@ -12,6 +12,7 @@
 puts "Cleaning existing records..."
 Test.destroy_all
 Material.destroy_all
+Chat.destroy_all
 Subject.destroy_all
 User.destroy_all
 Tutor.destroy_all

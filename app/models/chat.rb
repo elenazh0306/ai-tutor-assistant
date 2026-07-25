@@ -1,7 +1,7 @@
 class Chat < ApplicationRecord
   belongs_to :subject
   belongs_to :feedback, optional: true
-  has_many :messages
+  has_many :messages, dependent: :destroy
   DEFAULT_TITLE = "New Chat"
   TITLE_PROMPT = <<~PROMPT
     Generate a short, descriptive, 3-to-6-word title that summarizes the user question for a chat conversation.
