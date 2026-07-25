@@ -10,8 +10,9 @@ class MessagesController < ApplicationController
     @message.role = "user"
 
     if @message.save
-      ruby_llm_chat = RubyLLM.chat
-      response = ruby_llm_chat.with_instructions(instructions).ask(@message.content)
+      @ruby_llm_chat = RubyLLM.chat
+      build_conversation_history
+      response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
       Message.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
       redirect_to chat_path(@chat)
@@ -21,6 +22,12 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def build_conversation_history
+    @chat.messages.each do |message|
+      @ruby_llm_chat.add_message(message)
+    end
+  end
 
   def subject_context
     # left it as a name for now as we do not have content for a subject

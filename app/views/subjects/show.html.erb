@@ -1,6 +1,6 @@
 
-  
-  <div class="col"> 
+
+  <div class="col">
     <h1><%= @subject.name %></h1>
 
   </div>
@@ -31,8 +31,20 @@
 
       <% end %>
     </div>
+
+  <div class="col-md-3">
+    <h2>Materials</h2>
+    <div class="mb-4">
+      <% if @subject.materials.any? %>
+        <ul>
+          <% @subject.materials.each do |material| %>
+            <li><%= link_to material.title, subject_material_path(@subject, material) %></li>
+          <% end %>
+        </ul>
+
+      <% else %>
+      <p>There are no materials to review yet</p>
+
+      <% end %>
+    </div>
   </div>
-
-
-
-
