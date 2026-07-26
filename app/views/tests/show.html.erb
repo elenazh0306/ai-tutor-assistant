@@ -1,8 +1,9 @@
 <h1><%= @test.title %></h1>
 
-<%= link_to "Back to Tests", subject_tests_path %>
+<% @questions.each do |question| %>
+  <p>Question: <%= question.title %></p>
+  <p>Your answer: <%= question.answer %></p>
+  <% end %>
+
+<%= link_to "Back to subject", subject_path(@subject) %>
 <%= link_to "Delete Test", subject_test_path(@subject, @test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-
-
-
-<%# Test with Answers %>

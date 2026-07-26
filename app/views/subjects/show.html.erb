@@ -47,4 +47,27 @@
 
       <% end %>
     </div>
+
+    <div class="col-md-3">
+    <h2>Tests</h2>
+    <div class="mb-4">
+      <% if @subject.tests.any? %>
+        <ul>
+          <% @subject.tests.each do |test| %>
+            <li><%= link_to test.title, subject_test_path(@subject, test) %></li>
+          <% end %>
+        </ul>
+
+      <% else %>
+      <p>There are no tests yet</p>
+      <div id="new_test_container">
+
+      <%= link_to 'Create a new test',
+                new_subject_test_path(@subject, Test.new ),
+                class: 'btn btn-primary' %>
+
+      </div>
+
+      <% end %>
+    </div>
   </div>
