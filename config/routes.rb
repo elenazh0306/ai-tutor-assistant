@@ -1,6 +1,16 @@
 Rails.application.routes.draw do
   devise_for :users
-  root to: "pages#home"
+
+  authenticated :user do
+    root to: "subjects#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    devise_scope :user do
+      root to: "pages#home", as: :unauthenticated_root
+    end
+  end
+
 
   
   resources :subjects do
