@@ -1,5 +1,4 @@
 <%= simple_form_for [@subject, @test] do |f| %>
-
  <h2><%= @test.title %></h2>
   <%= f.input :title, as: :hidden %>
 
@@ -12,6 +11,7 @@
 
   <% end %>
   <%= f.button :submit, "Submit Test", class: "btn-primary" %>
+
 <% end %>
 
 <%= link_to "Cancel", subject_path(@subject) %>
