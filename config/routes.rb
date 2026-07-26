@@ -10,9 +10,12 @@ Rails.application.routes.draw do
 
   end
 
-  resources :tests, only: [:destroy] do
+  resources :tests, only: [:new, :create] do
+    resources :questions, only: [:new, :create]
     resources :feedbacks, only: [:create, :show]
   end
+
+
 
   resources :chats, except: [:create, :index] do
     resources :messages, only: [:create]
