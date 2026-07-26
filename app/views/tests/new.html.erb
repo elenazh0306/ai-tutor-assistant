@@ -1,6 +1,8 @@
 <%= simple_form_for [@subject, @test] do |f| %>
  <h2><%= @test.title %></h2>
   <%= f.input :title, as: :hidden %>
+  <%= f.input :quantity, as: :hidden %>
+  <%= f.input :difficulty, as: :hidden %>
 
   <h3>Questions</h3>
 

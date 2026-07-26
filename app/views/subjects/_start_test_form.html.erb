@@ -1,0 +1,15 @@
+<%= form_with url: new_subject_test_path(@subject), method: :get do |f| %>
+  <h4>Create a new test </h4>
+    <%= f.label :question_quantity, "Pick a number of Questions" %>
+    <%= f.number_field :question_quantity %>
+    <%= f.label :difficulty, "Pick the difficulty" %>
+    <%= f.select :difficulty, ['Easy', 'Moderate', 'Hard'], { prompt: "Select a list..." } %>
+    <%= f.label :materials, "Pick the testing materials" %>
+    <%= f.collection_check_boxes :material, @subject.materials, :id, :title do |b| %>
+      <div class="form-check">
+        <%= b.check_box(class: "form-check-input") %>
+        <%= b.label(class: "form-check-label") %>
+      </div>
+    <% end %>
+    <%= f.submit 'Start the test', class: 'btn btn-primary' %>
+  <% end %>
