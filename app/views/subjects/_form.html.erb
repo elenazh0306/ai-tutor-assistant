@@ -1,4 +1,4 @@
 <%= simple_form_for(subject) do |f| %>
-  <%= f.input :name %>
-  <%= f.submit %>
+  <%= f.input :name, label: "Subject Name", input_html: {class: "text-center"}, label_html: {class: "fs-4"} %>
+  <%= f.submit class: "btn btn-primary fs-4" %>
 <% end %>
