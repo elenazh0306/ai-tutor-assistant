@@ -1,15 +1,22 @@
 <%= form_with url: new_subject_test_path(@subject), method: :get do |f| %>
-  <h4>Create a new test </h4>
-    <%= f.label :question_quantity, "Pick a number of Questions" %>
-    <%= f.number_field :question_quantity %>
-    <%= f.label :difficulty, "Pick the difficulty" %>
-    <%= f.select :difficulty, ['Easy', 'Moderate', 'Hard'], { prompt: "Select a list..." } %>
-    <%= f.label :materials, "Pick the testing materials" %>
+  <h2>Create a new test </h2>
+    <%= f.label :question_quantity, "Pick a number of Questions", class: "fs-5 my-2" %>
+    <%= f.number_field :question_quantity %> <br>
+    <%= f.label :difficulty, "Pick the difficulty", class: "fs-5 my-2" %>
+    <%= f.select :difficulty, ['Easy', 'Moderate', 'Hard'], { prompt: "Select a list..." } %><br>
+    <%= f.label :materials, "Pick the testing materials", class: "fs-5 my-2" %>
     <%= f.collection_check_boxes :material, @subject.materials, :id, :title do |b| %>
-      <div class="form-check">
-        <%= b.check_box(class: "form-check-input") %>
-        <%= b.label(class: "form-check-label") %>
+      <div class="d-flex justify-content-center">
+        <div class="checkbox-wrapper-23 d-flex align-items-center mb-2">
+          <%= b.check_box %>
+          <%= b.label(style: "--size: 20px;") do %>
+            <svg viewBox="0 10 24 24">
+              <path d="M4 12 L 9 17 L 20 6"></path>
+            </svg>
+          <% end %>
+          <span class="ms-2 fs-5"><%= b.text %></span>
+        </div>
       </div>
     <% end %>
-    <%= f.submit 'Start the test', class: 'btn btn-primary' %>
+    <%= f.submit 'Start the test', class: 'button-new' %>
   <% end %>
