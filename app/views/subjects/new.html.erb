@@ -1,3 +1,14 @@
-<h1>Create a new Subject</h1>
-  <%= render partial: "form", locals: { subject: @subject } %>
-<%= link_to "Back to Subjects", subjects_path %>
+<div class = "container py-4 subject-page">
+  <div>
+    <%= link_to "← Back to Subjects", subjects_path, class: "text-decoration-none text-secondary fs-4" %>
+  </div>
+  <div class = "d-flex justify-content-center align-items-center gap-4 mb-5">
+    <h1>Create a New Subject</h1>
+  </div>
+
+  <div class = "subjects-container text-center">
+    <div class = "subject-form">
+      <%= render partial: "form", locals: { subject: @subject } %>
+    </div>
+  </div>
+</div>
