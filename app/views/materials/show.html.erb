@@ -2,11 +2,6 @@
   <h1><%= @material.title %></h1>
 </div>
 
-<!-- AI generated image for study materials here -->
-<% if @material.image_url.present? %>
-  <%= image_tag @material.image_url %>
-<% end %>
-
 <p><%= @material.content%></p>
 <div>
   <!-- Study material text goes here -->
