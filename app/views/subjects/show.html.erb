@@ -12,6 +12,11 @@
     <%= link_to "Delete Subject", subject_path(@subject), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this subject?"} %>
   </div>
 
+  <!-- AI generated image for subject here -->
+<% if @subject.image_url.present? %>
+  <%= image_tag @subject.image_url %>
+<% end %>
+
   <div class="col-md-3">
     <h2>Chats</h2>
     <div class="mb-4">

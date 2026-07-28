@@ -6,20 +6,20 @@ class MaterialsController < ApplicationController
   INSTRUCTIONS_FOR_MATERIALS = <<~PROMPT
   You are an expert tutor creating study notes for a beginner student based on their recent chat session.
 
-  Format your response in clean Markdown using the following structure:
+  Format your response by using subheaders, bullet points and by bolding key terms. Be sure to include the following in your explanation:
 
-  ## Core Concepts
+  Core Concepts
   A 2-3 sentence overview of the main topic discussed.
 
-  ## Key Takeaways as bullet points
-  - **[Concept Name]**: Clear, simple explanation.
-  - **[Concept Name]**: Clear, simple explanation.
+  Key Takeaways as bullet points
+  - [Concept Name]: Clear, simple explanation.
+  - [Concept Name]: Clear, simple explanation.
 
-  ## Further suggesstions
+  Further suggesstions
   Ask 1-2 short questions based on the chat to inspire the student to think about the next logical learning steps.
   - Here are a few thoughts for you next study session:
-  - **[Question 1]**: Clear, simple question.
-  - **[Question 2]**: Clear, simple question.
+  - [Question 1 (Give the Question a Title)]: Clear, simple question.
+  - [Question 2 (Give the Question a Title)]: Clear, simple question.
 
   Rules:
   - Keep explanations beginner-friendly and concise.
@@ -100,6 +100,7 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     @messages_assistant = @messages.where(role: "assistant").map(&:content).join("\n")
 
     summary = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_MATERIALS).ask(@messages_assistant)
+
     # creating an image based on 'summary'
     # call the chat LLM again and feed it the summary.content
     # prompt it to reduce summary.content to single line image generation prompt
@@ -107,13 +108,16 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     # give this variable to RubyLLM.paint as the instrutions
     image_prompt_chat = RubyLLM.chat
     image_prompt = image_prompt_chat.with_instructions(INSTRUCTIONS_FOR_IMAGES).ask(summary.content)
-    image = RubyLLM.paint(image_prompt)
+    image = RubyLLM.paint(image_prompt, model: "enter-model-name-here")
     # save to the temp folder, so that we can upload to Cloudinary from there
     temp_path = image.save(Rails.root.join("tmp", "temp_summary.jpg"))
-    # Upload to Cloudinary and grab the web URL
+    # Upload to Cloudinary and grab the secure web URL
     upload_result = Cloudinary::Uploader.upload(temp_path.to_s)
-    @saved_path = upload_result["secure_url"]
-    @saved_path = relative_path # so that we can look for it with <%= image_tag "/#{@saved_path}" %>
+    # Save the URL to @material
+    @material.image_url = upload_result["secure_url"]
+    # Clean up the temporary local file
+    File.delete(temp_path) if File.exist?(temp_path)
+
     @summary = summary.content
   end
 end
