@@ -10,7 +10,7 @@ class ChatsController < ApplicationController
     if @chat.save
       redirect_to chat_path(@chat)
     else
-      @subject.chat = @chat
+      @subject.chats = @chats
       render "challenges/show", status: :unprocessable_entity
     end
   end
