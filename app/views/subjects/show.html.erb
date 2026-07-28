@@ -6,6 +6,10 @@
 
   <div class = "d-flex justify-content-center align-items-center gap-4 mb-5">
     <h1 class = "mb-3"><%= @subject.name %></h1>
+    <!-- AI generated image for subject here -->
+    <% if @subject.image_url.present? %>
+      <%= image_tag @subject.image_url %>
+    <% end %>
     <button
     class = "btn btn-outline-secondary mb-3"
     type = "button"
@@ -17,11 +21,6 @@
     </button>
   </div>
 
-  <div class = "d-flex justify-content-center align-items-center">
-    <div class = "collapse" id = "subjectActions">
-      <%= link_to "Create Study Materials", new_subject_material_path(@subject), class: "btn btn-primary fs-4" %>
-      <%= link_to "Test Me on This Subject", new_subject_test_path(@subject), class: "btn btn-success fs-4" %>
-      <%= link_to "Delete Subject", subject_path(@subject), class: "btn btn-outline-danger fs-4", data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this subject?"} %>
     </div>
     <div class = "row justify-content-center g-3 mt-2">
       <div class = "col-12 col-md-6 text-center">

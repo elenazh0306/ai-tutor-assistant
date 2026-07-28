@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_195204) do
   create_table "materials", force: :cascade do |t|
     t.string "content"
     t.datetime "created_at", null: false
+    t.string "image_url"
     t.bigint "subject_id", null: false
     t.string "title"
     t.datetime "updated_at", null: false
@@ -89,6 +90,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_26_195204) do
 
   create_table "subjects", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "image_url"
     t.string "name"
     t.bigint "tutor_id", null: false
     t.datetime "updated_at", null: false
