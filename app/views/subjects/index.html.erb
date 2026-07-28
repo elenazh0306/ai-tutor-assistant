@@ -1,17 +1,24 @@
-<div> <!-- possible hero banner here -->
-  <h1>All your subjects here!</h1>
+<div class = "subject-page">
+  <div class="subjects-banner text-center"> <!-- possible hero banner here -->
+    <h1>All your subjects here!</h1>
+  </div>
+  <div class = "subjects-container text-center">
+    <% if @subjects.any? %> <!-- checking if the user even has any subjects yet -->
+      <% @subjects.each do |subject| %>
+        <div class = "subject-item">
+          <!-- AI generated image for subject here -->
+          <% if subject.image_url.present? %>
+           <%= image_tag subject.image_url %>
+          <% end %>
+          <h2><%= link_to subject.name, subject_path(subject) %></h2>
+        </div>
+      <% end %>
+    <% else %> <!-- if the user has no subjects, we display this message -->
+      <p>You haven't created any study subjects yet!</p>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to "Create a New Subject", new_subject_path, class: "btn btn-primary fs-4" %>
+  </div>
 </div>
-
-<% if @subjects.any? %> <!-- checking if the user even has any subjects yet -->
-  <% @subjects.each do |subject| %>
-  <!-- AI generated image for subject here -->
-  <% if subject.image_url.present? %>
-    <%= image_tag subject.image_url %>
-  <% end %>
-    <h2><%= link_to subject.name, subject_path(subject) %></h2>
-  <% end %>
-<% else %> <!-- if the user has no subjects, we display this message -->
-  <p>You haven't created any study subjects yet!</p>
-<% end %>
-
-<%= link_to "Create a new Subject", new_subject_path %>

@@ -1,0 +1,47 @@
+.subjects-banner {
+  padding: 10px;
+}
+
+.subject-item {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+.subjects-container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 20px;
+
+}
+
+.subject-form {
+  padding: 10px;
+}
+
+.subject-page {
+  font-family: "Sue Ellen Francisco";
+  background-image: image-url('notebook_paper.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+  h1 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.5em;
+  }
+
+  p, a {
+    font-family: "Sue Ellen Francisco";
+    font-size: 1.5em;
+  }
+}
