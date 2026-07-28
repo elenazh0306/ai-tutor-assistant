@@ -1,7 +1,3 @@
 RubyLLM.configure do |config|
-  config.gemini_api_key = ENV['GEMINI_API_KEY']
-  config.default_model = 'gemini-3.1-flash-lite'
+  config.openai_api_key = ENV['OPENAI_API_KEY']
 end
-
-# Refresh the model registry once when Rails boots up
-RubyLLM.models.refresh!
