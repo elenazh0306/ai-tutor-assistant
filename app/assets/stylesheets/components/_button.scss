@@ -1,0 +1,82 @@
+.button-new {
+  border: 2px solid black ;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s ease;
+  background-color: transparent ;
+  font-size: 1.7rem ;
+
+  &:hover {
+    border: 2px solid rgba(255, 0, 0, 0.588)  ;
+
+    color: rgba(255, 0, 0, 0.588);
+  }
+}
+
+// Variables
+$checkbox-size: 20px !default;
+$checkbox-border-color: #333 !default;
+$checkbox-stroke-color: #333 !default;
+
+.checkbox-wrapper-23 {
+  // Apply box-sizing reset locally
+  &,
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+
+    // Checked state: triggers SVG path animation
+    &:checked + label svg path {
+      stroke-dashoffset: 0;
+    }
+
+    // Focus state
+    &:focus + label {
+      transform: scale(1.03);
+    }
+
+    // Label styling (The Checkbox Box)
+    + label {
+      --size: #{$checkbox-size};
+
+      display: block;
+      width: var(--size);
+      height: var(--size);
+      border: 2px solid $checkbox-border-color;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:active {
+        transform: scale(1.08);
+        border-radius: 6px;
+      }
+
+      // SVG Tick Container
+      svg {
+        pointer-events: none;
+        padding: -2px;
+
+        // Animated Tick Line
+        overflow: visible !important;
+
+        path {
+          fill: none;
+          stroke: $checkbox-stroke-color;
+          stroke-width: 3.5px;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 40;
+          stroke-dashoffset: 41;
+          transition: all 250ms cubic-bezier(1, 0, 0.37, 0.91);
+        }
+      }
+    }
+  }
+}
