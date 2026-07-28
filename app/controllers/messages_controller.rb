@@ -15,6 +15,10 @@ class MessagesController < ApplicationController
       response = @ruby_llm_chat.with_instructions(instructions).ask(@message.content)
       Message.create(role: "assistant", content: response.content, chat: @chat)
       @chat.generate_title_from_first_message
+      respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to @chat }
+    end
       redirect_to chat_path(@chat)
     else
       render "chats/show", status: :unprocessable_entity

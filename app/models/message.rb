@@ -1,6 +1,8 @@
 class Message < ApplicationRecord
   belongs_to :chat
 
+  broadcasts_to :chat, target: "messages"
+
   MAX_USER_MESSAGES = 10
 
   validate :user_message_limit, if: -> { role == "user" }
