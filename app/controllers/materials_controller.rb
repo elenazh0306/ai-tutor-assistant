@@ -105,11 +105,12 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     # LLM for materials content generation
     @ruby_llm_chat = RubyLLM.chat
     @messages_assistant = @messages.where(role: "assistant").map(&:content).join("\n")
-    
+
     summary = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_MATERIALS).ask(@messages_assistant)
     # Pass summary through Kramdown in the new method or view
     @summary = Kramdown::Document.new(summary.content).to_html
 
+=begin
     # creating an image based on 'summary'
     # call the chat LLM again and feed it the summary.content
     # prompt it to reduce summary.content to single line image generation prompt
@@ -126,6 +127,7 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     @material.image_url = upload_result["secure_url"]
     # Clean up the temporary local file
     File.delete(temp_path) if File.exist?(temp_path)
+=end
 
     @summary = summary.content
   end
