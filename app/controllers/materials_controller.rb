@@ -23,13 +23,21 @@ class MaterialsController < ApplicationController
     @messages_assistant = @messages.where(role: "assistant").map(&:content).join("\n")
 
     summary = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_MATERIALS).ask(@messages_assistant)
-    @summary = summary.content
+    # Pass summary through Kramdown in the new method or view
+    @summary = Kramdown::Document.new(summary.content).to_html
   end
 
 
   def create
+    # Convert the incoming markdown parameter into HTML
+    html_content = Kramdown::Document.new(material_params[:content]).to_html
+    # Create the new Material
     @material = Material.new(material_params)
+    # Link the material content to the html content created by the 'Kramdown' markup gem
+    @material.content = html_content
+    # Link the Material to its Subject
     @material.subject = @subject
+    # Initiate the save
     if @material.save
       redirect_to subject_material_path(@subject, @material)
     else
