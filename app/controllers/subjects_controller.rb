@@ -16,6 +16,10 @@ class SubjectsController < ApplicationController
 
   def create
     @subject = Subject.new(subject_params)
+    @subject.user = current_user
+    tutor = Tutor.last
+    @subject.user = tutor
+
     if @subject.save
       redirect_to subject_path(@subject)
     else
