@@ -5,6 +5,8 @@
   transition: transform 0.2s ease;
   background-color: transparent ;
   font-size: 1.7rem ;
+  font-family: "Sue Ellen Francisco";
+  color: black;
 
   &:hover {
     border: 2px solid rgba(255, 0, 0, 0.588)  ;
@@ -78,5 +80,15 @@ $checkbox-stroke-color: #333 !default;
         }
       }
     }
+  }
+}
+
+.send-message {
+
+  align-items: end;
+
+  i {
+    color: rgba(36, 36, 233, 0.815);
+    font-size: 1.5em;
   }
 }

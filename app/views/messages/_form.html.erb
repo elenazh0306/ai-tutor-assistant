@@ -1,0 +1,10 @@
+<%= simple_form_for [chat, message] do |f| %>
+  <div>
+    <%= f.input :content, label: "Send a message to your tutor", required: true, placeholder: "Start typing..." %>
+  </div>
+  <div class="send-message">
+    <%= f.button :button  do %>
+    <i class="fa-solid fa-paper-plane"></i>
+  <% end %>
+  </div>
+<% end %>
