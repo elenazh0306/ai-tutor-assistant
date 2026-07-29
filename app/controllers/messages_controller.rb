@@ -12,15 +12,15 @@ class MessagesController < ApplicationController
     if @message.save
       @assistant_message = Message.create(role: "assistant", content: "", chat: @chat)
 
-      ask_llm
-      @assistant_message.save
+      response = ask_llm
+      @assistant_message.update(content: response.content)
       @chat.generate_title_from_first_message
-      broadcast_replace(@assistant_message)
+
       # for the corrent order of message display
       respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to @chat }
-    end
+        format.turbo_stream
+        format.html { redirect_to @chat }
+      end
 
     else
       respond_to do |format|
@@ -30,26 +30,32 @@ class MessagesController < ApplicationController
     end
   end
 
-  def broadcast_replace(message)
-    Turbo::StreamsChannel.broadcast_replace_to(@chat, target: helpers.dom_id(message), partial: "messages/message", locals: { message: message })
-  end
 
   private
 
   def ask_llm
     @ruby_llm_chat = RubyLLM.chat
+
     build_conversation_history
-    @ruby_llm_chat.with_instructions(instructions).ask(@message.content) do |chunk|
+
+    photo = @message.photo.attached? ? @message.photo : ""
+
+
+
+    @ruby_llm_chat.with_instructions(instructions).ask(@message.content, with: @message.photo) do |chunk|
       next if chunk.content.blank? # skip empty chunks
 
       @assistant_message.content += chunk.content
       broadcast_replace(@assistant_message)
     end
+  end
 
+  def broadcast_replace(message)
+    Turbo::StreamsChannel.broadcast_replace_to(@chat, target: helpers.dom_id(message), partial: "messages/message", locals: { message: message })
   end
 
   def build_conversation_history
-    @chat.messages.where.not(id: @assistant_message.id).each do |message|
+    @chat.messages.each do |message|
       next if message.content.blank?
       @ruby_llm_chat.add_message(message)
     end
@@ -65,6 +71,6 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:content, :photo)
   end
 end
