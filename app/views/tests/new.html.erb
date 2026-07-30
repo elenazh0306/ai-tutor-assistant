@@ -1,19 +1,26 @@
-<%= simple_form_for [@subject, @test] do |f| %>
- <h2><%= @test.title %></h2>
-  <%= f.input :title, as: :hidden %>
-  <%= f.input :quantity, as: :hidden %>
-  <%= f.input :difficulty, as: :hidden %>
+<div class="new-test-page">
+  <%= simple_form_for [@subject, @test] do |f| %>
+  <h2 class="text-center"><%= @test.title %></h2>
+    <%= f.input :title, as: :hidden %>
+    <%= f.input :quantity, as: :hidden %>
+    <%= f.input :difficulty, as: :hidden %>
+  <div class="test-questions py-2">
+    <h3 class="text-center">Questions</h3>
 
-  <h3>Questions</h3>
+    <%= f.simple_fields_for :questions do |q| %>
+      <%= q.input :title, as: :hidden, class: "fw-bold" %>
+      <%= q.object.title %>
+      <%= q.input :answer, placeholder: "Type your answer here..." %>
 
-  <%= f.simple_fields_for :questions do |q| %>
-    <%= q.input :title, as: :hidden %>
-    <%= q.object.title %>
-    <%= q.input :answer, placeholder: "Type your answer here..." %>
-
-  <% end %>
-  <%= f.button :submit, "Submit Test", class: "btn-primary" %>
-
-<% end %>
-
-<%= link_to "Cancel", subject_path(@subject) %>
+    <% end %>
+  </div>
+  <div class="d-flex justify-content-around">
+    <div class="sue-font">
+        <%= f.button :submit, "Submit Test", class: "button-new" %>
+      <% end %>
+    </div>
+    <div class="sue-font">
+      <%= link_to "Cancel", subject_path(@subject), class: "button-cancel" %>
+    </div>
+  </div>
+</div>

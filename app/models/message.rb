@@ -1,11 +1,16 @@
 class Message < ApplicationRecord
   belongs_to :chat
+  has_one_attached :photo
+
+
 
   MAX_USER_MESSAGES = 10
 
   validate :user_message_limit, if: -> { role == "user" }
 
   private
+
+
 
   def user_message_limit
     if chat.messages.where(role: "user").count >= MAX_USER_MESSAGES
