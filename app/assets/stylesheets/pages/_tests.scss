@@ -1,0 +1,30 @@
+.new-test-page {
+  background-image: image-url('notebook_paper.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 700px;
+  margin: 0 auto;
+
+  h2 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.5em;
+  }
+
+  h3 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.2em;
+  }
+}
+
+.test-questions {
+  padding: 0 20px;
+  font-family: Arial;
+  width: 600px;
+  margin: 0 auto;
+  line-height: 40px;
+
+}
+.sue-font {
+  font-family: "Sue Ellen Francisco";
+}
