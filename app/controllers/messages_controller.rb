@@ -38,11 +38,7 @@ class MessagesController < ApplicationController
 
     build_conversation_history
 
-    photo = @message.photo.attached? ? @message.photo : ""
-
-
-
-    @ruby_llm_chat.with_instructions(instructions).ask(@message.content, with: @message.photo) do |chunk|
+    @ruby_llm_chat.with_instructions(instructions).ask(@message.content) do |chunk|
       next if chunk.content.blank? # skip empty chunks
 
       @assistant_message.content += chunk.content
@@ -71,6 +67,6 @@ class MessagesController < ApplicationController
   end
 
   def message_params
-    params.require(:message).permit(:content, :photo)
+    params.require(:message).permit(:content)
   end
 end

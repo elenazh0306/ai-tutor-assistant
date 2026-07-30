@@ -93,24 +93,5 @@ INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginne
     # Generate the title of the materials
     @material.generate_title_from_summary(summary.content)
     @title = @material.title
-
-=begin
-    # creating an image based on 'summary'
-    # call the chat LLM again and feed it the summary.content
-    # prompt it to reduce summary.content to single line image generation prompt
-    # take that image prompt as a string variable
-    # give this variable to RubyLLM.paint as the instrutions
-    image_prompt_chat = RubyLLM.chat
-    image_prompt = image_prompt_chat.with_instructions(INSTRUCTIONS_FOR_IMAGES).ask(summary.content)
-    image = RubyLLM.paint(image_prompt, model: "enter-model-name-here")
-    # save to the temp folder, so that we can upload to Cloudinary from there
-    temp_path = image.save(Rails.root.join("tmp", "temp_summary.jpg"))
-    # Upload to Cloudinary and grab the secure web URL
-    upload_result = Cloudinary::Uploader.upload(temp_path.to_s)
-    # Save the URL to @material
-    @material.image_url = upload_result["secure_url"]
-    # Clean up the temporary local file
-    File.delete(temp_path) if File.exist?(temp_path)
-=end
   end
 end
