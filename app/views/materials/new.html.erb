@@ -1,6 +1,8 @@
 <h1>Review and save these Materials</h1>
 <%= simple_form_for [@subject, @material] do |f| %>
-  <%= f.input :title %>
+  <%= f.input :title,
+              as: :text,
+              input_html: { value: @title, rows: 1 } %>
   <%= f.input :content,
               as: :text,
               input_html: { value: @summary, rows: 8 } %>

@@ -2,11 +2,14 @@
   <div class="subjects-banner text-center"> <!-- possible hero banner here -->
     <h1>All your subjects here!</h1>
   </div>
-
   <div class = "subjects-container text-center">
     <% if @subjects.any? %> <!-- checking if the user even has any subjects yet -->
       <% @subjects.each do |subject| %>
         <div class = "subject-item">
+          <!-- AI generated image for subject here -->
+          <% if subject.image_url.present? %>
+           <%= image_tag subject.image_url %>
+          <% end %>
           <h2><%= link_to subject.name, subject_path(subject) %></h2>
         </div>
       <% end %>
