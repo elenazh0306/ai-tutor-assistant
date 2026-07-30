@@ -70,6 +70,7 @@ INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginne
     html_content = Kramdown::Document.new(summary.content).to_html
     # Link the material content to the html content created by the 'Kramdown' markup gem
     @material.content = html_content
+    @material.summary = summary.content
     # Generate the title of the materials
     @material.generate_title_from_summary(summary.content)
     @title = @material.title

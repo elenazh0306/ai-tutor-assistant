@@ -23,7 +23,7 @@ class TestsController < ApplicationController
     @test = Test.new(subject: @subject, title: "#{@subject.name} Test", quantity: @quantity, difficulty: @difficulty)
 
 
-    test_materials = @materials.pluck(:content).join("\n\n")
+    test_materials = @materials.pluck(:summary).join("\n\n")
     response = RubyLLM.chat.with_instructions(@prompt).ask(test_materials)
     @questions_array = JSON.parse(response.content)
     @questions_array.each do |q|
