@@ -39,10 +39,11 @@
     </div>
 
 
-   <div id="new_material_container">
+  <div id="new_material_container">
 
-    <%= link_to 'Create a new material',
-            new_subject_material_path(@subject, chat_id: @chat.id ),
+    <%= link_to 'Create Study Materials',
+            subject_materials_path(@subject, chat_id: @chat.id ),
+            data: { turbo_method: :post },
             class: 'btn btn-primary' %>
 
 

@@ -2,29 +2,7 @@ class MaterialsController < ApplicationController
   before_action :set_subject
   before_action :set_material, only: [:show, :edit, :update, :destroy]
 
-  # adding a longer, much more detailed prompt
-  INSTRUCTIONS_FOR_MATERIALS = <<~PROMPT
-  You are an expert tutor creating study notes for a beginner student based on their recent chat session.
-
-  Format your response by using subheaders, bullet points and by bolding key terms. Be sure to include the following in your explanation:
-
-  Core Concepts
-  A 2-3 sentence overview of the main topic discussed.
-
-  Key Takeaways as bullet points
-  - [Concept Name]: Clear, simple explanation.
-  - [Concept Name]: Clear, simple explanation.
-
-  Further suggesstions
-  Ask 1-2 short questions based on the chat to inspire the student to think about the next logical learning steps.
-  - Here are a few thoughts for you next study session:
-  - [Question 1 (Give the Question a Title)]: Clear, simple question.
-  - [Question 2 (Give the Question a Title)]: Clear, simple question.
-
-  Rules:
-  - Keep explanations beginner-friendly and concise.
-  - Avoid meta-talk like "Here is your summary." Jump straight into the content. Do not end with meta-talk.
-PROMPT
+INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginner from provided text"
 
 INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
   You are an expert AI image prompt engineer. Take the learning materials supplied and summarize them into a clear image prompt for an image that captures the mood and fundamental ideas regarding the subject.
@@ -43,21 +21,21 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
   end
 
   def new
-    @material = Material.new(content: params[:content])
+    # We have to convert params[:content] to a string or ActionText will throw an error
+    @material = Material.new(content: params[:content].to_s)
     @chat = Chat.find(params[:chat_id])
     @messages = @chat.messages
     llm_summary
   end
 
   def create
-    # Convert the incoming markdown parameter into HTML
-    html_content = Kramdown::Document.new(material_params[:content]).to_html
-    # Create the new Material
-    @material = Material.new(material_params)
-    # Link the material content to the html content created by the 'Kramdown' markup gem
-    @material.content = html_content
-    # Link the Material to its Subject
-    @material.subject = @subject
+    @chat = Chat.find(params[:chat_id])
+    @messages = @chat.messages
+    @material = Material.new(subject: @subject)
+
+    # Get the AI inputs
+    llm_summary
+
     # Initiate the save
     if @material.save
       redirect_to subject_material_path(@subject, @material)
@@ -105,11 +83,18 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     # LLM for materials content generation
     @ruby_llm_chat = RubyLLM.chat
     @messages_assistant = @messages.where(role: "assistant").map(&:content).join("\n")
-    
-    summary = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_MATERIALS).ask(@messages_assistant)
-    # Pass summary through Kramdown in the new method or view
-    @summary = Kramdown::Document.new(summary.content).to_html
 
+    # Get the AI-input and assign it to a variable
+    summary = @ruby_llm_chat.with_instructions(INSTRUCTIONS_FOR_MATERIALS).ask(@messages_assistant)
+    # Convert the summary text into HTML-format
+    html_content = Kramdown::Document.new(summary.content).to_html
+    # Link the material content to the html content created by the 'Kramdown' markup gem
+    @material.content = html_content
+    # Generate the title of the materials
+    @material.generate_title_from_summary(summary.content)
+    @title = @material.title
+
+=begin
     # creating an image based on 'summary'
     # call the chat LLM again and feed it the summary.content
     # prompt it to reduce summary.content to single line image generation prompt
@@ -126,7 +111,6 @@ INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
     @material.image_url = upload_result["secure_url"]
     # Clean up the temporary local file
     File.delete(temp_path) if File.exist?(temp_path)
-
-    @summary = summary.content
+=end
   end
 end
