@@ -1,4 +1,9 @@
 <%= simple_form_for(subject) do |f| %>
   <%= f.input :name, label: "Subject Name", input_html: {class: "text-center"}, label_html: {class: "fs-4"} %>
-  <%= f.submit class: "btn btn-primary fs-4" %>
+  <%= f.input :tutor_id,
+            collection: Tutor.all,
+            label_method: :name,
+            value_method: :id,
+            prompt: 'Pick your tutor for the subject' %>
+  <%= f.submit class: "button-new" %>
 <% end %>
