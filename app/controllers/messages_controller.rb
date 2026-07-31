@@ -34,7 +34,7 @@ class MessagesController < ApplicationController
   private
 
   def ask_llm
-    @ruby_llm_chat = RubyLLM.chat
+    @ruby_llm_chat = RubyLLM.chat.with_tool(TutorTool.new(tutor:@subject.tutor.name))
 
     build_conversation_history
 
@@ -53,7 +53,10 @@ class MessagesController < ApplicationController
   def build_conversation_history
     @chat.messages.each do |message|
       next if message.content.blank?
-      @ruby_llm_chat.add_message(message)
+      @ruby_llm_chat.add_message(
+        role: message.role,
+        content: message.content
+      )
     end
   end
 

@@ -10,18 +10,25 @@ class SubjectsController < ApplicationController
   end
 
   def new
+    create_tutor
     @subject = Subject.new
   end
 
   def create
     @subject = Subject.new(subject_params)
     @subject.user = current_user
-    @subject.tutor = Tutor.first
     if @subject.save
       redirect_to subject_path(@subject)
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def create_tutor
+    @ted = Tutor.create(name: "Ted Lasso")
+    @dumbledore = Tutor.create(name: "Albus Dumbledore")
+    @norbury = Tutor.create(name: "Ms. Norbury")
+
   end
 
   def edit
@@ -47,6 +54,6 @@ class SubjectsController < ApplicationController
   end
 
   def subject_params
-    params.require(:subject).permit(:name)
+    params.require(:subject).permit(:name, :tutor_id)
   end
 end
