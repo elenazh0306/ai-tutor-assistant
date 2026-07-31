@@ -24,5 +24,12 @@ class ChatsController < ApplicationController
     @material = Material.new
   end
 
+  def destroy
+    @chat = Chat.find(params[:id])
+    @subject = Subject.find(params[:subject_id])
+    @chat.destroy
+    redirect_to subject_path(@subject), status: :see_other
+  end
+
 
 end

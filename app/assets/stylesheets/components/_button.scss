@@ -109,3 +109,15 @@ $checkbox-stroke-color: #333 !default;
     font-size: 1.5em;
   }
 }
+
+.button-sticker {
+  border: none;
+  background-color: transparent;
+
+}
+
+.affected-container:has(.trigger:hover) {
+  .affected-by-button {
+    text-decoration: line-through;
+  }
+}
