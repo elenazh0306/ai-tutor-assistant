@@ -8,7 +8,7 @@
         <div class = "subject-item">
           <!-- AI generated image for subject here -->
           <% if subject.image_url.present? %>
-           <%= image_tag subject.image_url %>
+            <%= image_tag subject.image_url %>
           <% end %>
           <h2><%= link_to subject.name, subject_path(subject) %></h2>
         </div>
