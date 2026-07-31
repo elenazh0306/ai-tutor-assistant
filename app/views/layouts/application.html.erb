@@ -27,11 +27,12 @@
   </head>
 
   <body>
-  <%= link_to "Skip to main content", "#main-content", class: "visually-hidden-focusable" %>
-  <header>
-    <%= render "shared/navbar" %>
-  </header>
-
+    <%= link_to "Skip to main content", "#main-content", class: "visually-hidden-focusable" %>
+    <% unless devise_controller? %>
+      <header>
+        <%= render "shared/navbar" %>
+      </header>
+    <% end %>
 
   <main id="main-content">
     <%= yield %>
