@@ -41,7 +41,7 @@ INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginne
 
   def destroy
     @material.destroy
-    redirect_to subject_materials_path(@subject), status: :see_other
+    redirect_to subject_path(@subject), status: :see_other
   end
 
   private
