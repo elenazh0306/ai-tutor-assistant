@@ -8,6 +8,7 @@
   background: #fefabc;
   color: #333;
 
+
   font-size: 1.4rem;
   line-height: 1.3;
 
@@ -17,6 +18,11 @@
   box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.2);
 
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+  h1 {
+    font-family: "Sue Ellen Francisco" !important;
+
+  }
 
   &::after {
     content: "";

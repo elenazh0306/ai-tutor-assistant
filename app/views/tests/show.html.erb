@@ -1,17 +1,20 @@
 <div class = "container py-4 new-test-page">
   <div>
-    <%= link_to "← Back to Subject", subject_path(@subject), class: "text-decoration-none text-secondary fs-4" %>
+    <%= link_to "← Back to Subject", subject_path(@subject), class: "text-decoration-none text-secondary fs-4 font-sue" %>
   </div>
-  <h1><%= @test.title %></h1>
 
-  <% @questions.each do |question| %>
-    <p>Question: <%= question.title %></p>
-    <p>Your answer: <%= question.answer %></p>
-    <% end %>
-  <div class = "d-flex align items-center gap-3 mt-4">
-    <%= button_to "Generate Feedback", test_feedbacks_path(@test), id: 'generate-material-btn', class: "button-new", method: :post %>
-    <%= link_to "Delete Test", subject_test_path(@subject, @test), class: "button-cancel", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-  </div>
+  <div class="tests-container">
+    <h1><%= @test.title %></h1>
+
+    <% @questions.each do |question| %>
+      <p>Question: <%= question.title %></p>
+      <p>Your answer: <%= question.answer %></p>
+      <% end %>
+    <div class = "d-flex align items-center gap-3 mt-4">
+      <%= button_to "Generate Feedback", test_feedbacks_path(@test), id: 'generate-material-btn', class: "button-new", method: :post %>
+      <%= link_to "Delete Test", subject_test_path(@subject, @test), class: "button-cancel", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+    </div>
+    </div>
 </div>
 
 <!-- loading screen div -->

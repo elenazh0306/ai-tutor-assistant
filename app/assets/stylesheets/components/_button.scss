@@ -4,8 +4,8 @@
   transform: rotate(-1.5deg);
   transition: transform 0.2s ease;
   background-color: transparent ;
-  font-size: 1.7rem ;
-  font-family: "Sue Ellen Francisco";
+  font-size: 1.7rem !important;
+  font-family: "Sue Ellen Francisco" !important;
   color: black;
 
   &:hover {
@@ -21,8 +21,8 @@
   transform: rotate(-1.5deg);
   transition: transform 0.2s ease;
   background-color: transparent ;
-  font-size: 1.7rem ;
-  font-family: "Sue Ellen Francisco";
+  font-size: 1.7rem !important;
+  font-family: "Sue Ellen Francisco" !important;
   color: rgba(255, 0, 0, 0.588);
   padding: 0 20px;
 
@@ -138,4 +138,10 @@ $checkbox-stroke-color: #333 !default;
 
     color: rgba(255, 0, 0, 0.588);
   }
+}
+
+.font-sue {
+  font-family: "Sue Ellen Francisco" !important;
+  font-size: 1.7rem !important;
+  align-self: flex-start;
 }

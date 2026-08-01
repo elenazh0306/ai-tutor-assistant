@@ -93,6 +93,16 @@
                     <%= link_to subject_test_path(@subject, test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "trigger" do %>
                       <i class="fa-regular fa-trash-can"></i>
                     <% end %>
+                    </div>
+                    <div>
+                    <% if test.feedbacks.any? %>
+                    <p>Feedbacks</p>
+                    <div class="d-flex justify-content-center">
+                      <% test.feedbacks.each do |feedback| %>
+                          <p class="p-3" ><%= link_to feedback.id, test_feedback_path(test, feedback), class: "fs-4 list-items" %></p>
+                      <% end %>
+                      </div>
+                    <% end %>
                   </div>
                 <% end %>
                 <%= render "start_test_form" %>
@@ -102,6 +112,8 @@
             <% end %>
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
