@@ -1,8 +1,8 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: [:show, :edit, :update, :destroy]
+  before_action :set_subject, only: %i[show edit update destroy]
 
   def index
-    @subjects = Subject.all # Optional: Can be set to 'current_user.subjects' if scoped to logged-in user
+    @subjects = current_user.subjects # Optional: Can be set to 'current_user.subjects' if scoped to logged-in user
   end
 
   def show
@@ -42,7 +42,7 @@ class SubjectsController < ApplicationController
   private
 
   def set_subject
-    @subject = Subject.find(params[:id])
+    @subject = current_user.subjects.find(params[:id])
   end
 
   def subject_params
