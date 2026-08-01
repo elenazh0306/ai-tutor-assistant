@@ -19,14 +19,11 @@ Tutor.destroy_all
 
 # seeding the database
 puts "creating tutor and user"
-user = User.create!(email: "current_user@example.com", password: "111111")
-tutor = Tutor.create!(name: "Tutor")
-
-puts "creating subjects"
-Subject.create!(name: "biology", user: user, tutor: tutor)
-Subject.create!(name: "math", user: user, tutor: tutor)
-Subject.create!(name: "literature", user: user, tutor: tutor)
-puts "all done"
+User.create!(email: "current_user@example.com", password: "111111")
+Tutor.find_or_create_by!(name: "Ted Lasso")
+Tutor.find_or_create_by!(name: "Albus Dumbledore")
+Tutor.find_or_create_by!(name: "Ms. Norbury")
+puts "all set!"
 # user = User.find_or_initialize_by(email: "test@example.com")
 
 # if user.new_record?

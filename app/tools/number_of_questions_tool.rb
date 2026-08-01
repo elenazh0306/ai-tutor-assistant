@@ -6,6 +6,6 @@ class NumberOfQuestionsTool < RubyLLM::Tool
   end
 
   def execute
-    return "#{@quantity} questions"
+    "Generate exactly #{@quantity} questions. Never generate more or fewer."
   end
 end

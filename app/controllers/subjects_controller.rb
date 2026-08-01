@@ -10,7 +10,6 @@ class SubjectsController < ApplicationController
   end
 
   def new
-    create_tutor
     @subject = Subject.new
   end
 
@@ -22,13 +21,6 @@ class SubjectsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def create_tutor
-    @ted = Tutor.create(name: "Ted Lasso")
-    @dumbledore = Tutor.create(name: "Albus Dumbledore")
-    @norbury = Tutor.create(name: "Ms. Norbury")
-
   end
 
   def edit
