@@ -7,9 +7,6 @@
   <div class = "d-flex justify-content-center align-items-center gap-4 mb-5">
     <h1 class = "mb-3"><%= @subject.name %></h1>
     <!-- AI generated image for subject here -->
-    <% if @subject.image_url.present? %>
-      <%= image_tag @subject.image_url %>
-    <% end %>
     <button
     class = "btn btn-outline-secondary mb-3"
     type = "button"
