@@ -11,6 +11,7 @@
   <%= link_to 'Create materials',
           subject_materials_path(@subject, chat_id: @chat.id ),
           data: { turbo_method: :post },
+          id: 'generate-material-btn',
           class: 'button-new' %>
 </div>
   <div class="chat-page">
@@ -24,5 +25,13 @@
     </div>
   </div>
 
+<!-- loading screen div -->
+<div class="loading-screen">
+  <div class="splash-content">
+    <i class="fa-solid fa-book" style="color: rgba(36, 36, 233, 0.815);; font-size: 50px;"></i>
+    <h2>...Generating Study Materials...</h2>
+    <p>...please wait...</p>
+  </div>
+</div>
 
 </div>

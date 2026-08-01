@@ -7,4 +7,13 @@
 
 <%= link_to "Back to subject", subject_path(@subject) %>
 <%= link_to "Delete Test", subject_test_path(@subject, @test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-<%= button_to "Generate Feedback", test_feedbacks_path(@test), method: :post %>
+<%= button_to "Generate Feedback", test_feedbacks_path(@test), id: 'generate-material-btn', method: :post %>
+
+<!-- loading screen div -->
+<div class="loading-screen">
+  <div class="splash-content">
+    <i class="fa-solid fa-list-check" style="color: rgba(36, 36, 233, 0.815);; font-size: 50px;"></i>
+    <h2>...Let's See How You Did...</h2>
+    <p>...great, I'm sure!...</p>
+  </div>
+</div>
