@@ -4,11 +4,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   width: 700px;
-  margin: 0 auto;
+  margin: 20px auto;
+  padding-top: 48px;
 
   h1 {
     font-family: "Sue Ellen Francisco";
-    font-size: 3rem;
+    font-size: 2.8em;
   }
 
   h2 {
@@ -19,11 +20,6 @@
   h3 {
     font-family: "Sue Ellen Francisco";
     font-size: 2.2em;
-  }
-
-  p, a {
-    font-family: "Sue Ellen Francisco";
-    font-size: 1.5em;
   }
 }
 
@@ -37,4 +33,35 @@
 }
 .sue-font {
   font-family: "Sue Ellen Francisco";
+}
+
+.new-test-page2 {
+  background-image: image-url('notebook_paper.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-size: 120%;
+  line-height: 1.5;
+  width: 700px;
+  margin: 20px auto;
+  padding: 48px;
+
+  h1 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.8em;
+    text-align: center;
+        margin-bottom: 48px;
+  }
+
+  h2 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.5em;
+    text-align: center;
+  }
+
+  h3 {
+    font-family: "Sue Ellen Francisco";
+    font-size: 2.2em;
+    text-align: center;
+  }
 }
