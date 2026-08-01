@@ -9,7 +9,8 @@
 </div>
 <div id="new_material_container" >
   <%= link_to 'Create materials',
-          new_subject_material_path(@subject, chat_id: @chat.id ),
+          subject_materials_path(@subject, chat_id: @chat.id ),
+          data: { turbo_method: :post },
           class: 'button-new' %>
 </div>
   <div class="chat-page">

@@ -4,48 +4,82 @@
     <%= link_to "← Back to Subjects", subjects_path, class: "text-decoration-none text-secondary fs-4" %>
   </div>
 
-  <div class = "d-flex justify-content-center align-items-center gap-4 mb-5">
-    <h1 class = "mb-3"><%= @subject.name %></h1>
-    <!-- AI generated image for subject here -->
-    <button
-    class = "btn btn-outline-secondary mb-3"
-    type = "button"
-    data-bs-toggle = "collapse"
-    data-bs-target = "#subjectActions"
-    aria-expanded = "false"
-    aria-controls = "subjectActions">
-    ⚙
-    </button>
+  <div class = "d-flex justify-content-center align-items-center gap-4 mb-2">
+    <div class="sticky-note d-flex flex-column justify-content-center align-items-center">
+      <h1 class = "mb-3 text-center"><%= @subject.name %></h1>
+      <button
+        class = "button-sticker"
+        type = "button"
+        data-bs-toggle="collapse"
+        data-bs-target = "#subjectActions"
+        aria-expanded = "false"
+        aria-controls = "subjectActions">
+        <i class="fa-regular fa-pen-to-square fs-3"></i>
+      </button>
+      <div class="collapse" id="subjectActions">
+        <div>
+          <%= link_to "Delete the subject", subjects_path, data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+        </div>
+      </div>
+    </div>
   </div>
-
-
     <div class = "row justify-content-center g-3 mt-2">
       <div class = "col-12 col-md-6 text-center">
         <div class = "card border-0 bg-transparent">
           <div class = "card-body  card-subject-show ">
+          <button
+            class = "button-sticker"
+            type = "button"
+            data-bs-toggle="collapse"
+            data-bs-target = "#chatActions"
+            aria-expanded = "false"
+            aria-controls = "chatActions">
             <h2>💬 Chats</h2>
+          </button>
             <p class = "text-muted">Ask questions and study this subject with your AI tutor!</p>
-            <% if @chats.any? %>
-              <% @chats.each do |chat| %>
-                <p><%= link_to chat.title, chat_path(chat), class: "fs-4 list-items" %></p>
-              <% end %>
+            <div class="collapse" id="chatActions">
+              <% if @chats.any? %>
+                <% @chats.each do |chat| %>
+                  <div class='d-flex justify-content-around affected-container'>
+                  <p class="affected-by-button"><%= link_to chat.title, chat_path(chat), class: "fs-4 list-items" %></p>
+                  <%= link_to subject_chat_path(@subject, chat), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "trigger" do %>
+                    <i class="fa-regular fa-trash-can"></i>
+                  <% end %>
+                  </div>
+                <% end %>
+                <%= render "start_chat_form" %>
+              <% else %>
               <%= render "start_chat_form" %>
-            <% else %>
-            <%= render "start_chat_form" %>
-            <% end %>
+              <% end %>
+            </div>
           </div>
         </div>
 
         <div class = "card border-0 bg-transparent">
           <div class = "card-body">
-            <h2>📖 Materials</h2>
-            <% if @subject.materials.any? %>
-                <% @subject.materials.each do |material| %>
-                  <p><%= link_to material.title, subject_material_path(@subject, material), class: "fs-4 list-items" %></p>
-                <% end %>
-            <% else %>
-            <p class = "text-muted">There are no materials to review yet</p>
-            <% end %>
+            <button
+              class = "button-sticker"
+              type = "button"
+              data-bs-toggle="collapse"
+              data-bs-target = "#materialActions"
+              aria-expanded = "false"
+              aria-controls = "materialActions">
+              <h2>📖 Materials</h2>
+            </button>
+            <div class="collapse" id="materialActions">
+              <% if @subject.materials.any? %>
+                  <% @subject.materials.each do |material| %>
+                    <div class='d-flex justify-content-around affected-container'>
+                      <p class="affected-by-button"><%= link_to material.title, subject_material_path(@subject, material), class: "fs-4 list-items" %></p>
+                      <%= link_to subject_material_path(@subject, material), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "trigger" do %>
+                      <i class="fa-regular fa-trash-can"></i>
+                      <% end %>
+                    </div>
+                  <% end %>
+              <% else %>
+              <p class = "text-muted">There are no materials to review yet</p>
+              <% end %>
+            </div>
           </div>
         </div>
 
@@ -54,7 +88,12 @@
             <h2>✏️ Tests</h2>
             <% if @subject.tests.any? %>
                 <% @subject.tests.each do |test| %>
-                  <p><%= link_to test.title, subject_test_path(@subject, test), class: "fs-4 list-items" %></p>
+                  <div class='d-flex justify-content-around affected-container'>
+                    <p class="affected-by-button"><%= link_to test.title, subject_test_path(@subject, test), class: "fs-4 list-items" %></p>
+                    <%= link_to subject_test_path(@subject, test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "trigger" do %>
+                      <i class="fa-regular fa-trash-can"></i>
+                    <% end %>
+                  </div>
                 <% end %>
                 <%= render "start_test_form" %>
             <% else %>

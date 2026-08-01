@@ -12,11 +12,11 @@ Rails.application.routes.draw do
   end
 
 
-  
+
   resources :subjects do
     resources :materials
     resources :tests, except: [:edit, :update]
-    resources :chats, only: [:create, :index]
+    resources :chats, only: [:create, :index, :destroy]
 
   end
 
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
 
 
-  resources :chats, except: [:create, :index] do
+  resources :chats, except: [:create, :index, :destroy] do
     resources :messages, only: [:create]
   end
 

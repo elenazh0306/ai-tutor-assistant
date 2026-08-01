@@ -1,31 +1,11 @@
 class MaterialsController < ApplicationController
   before_action :set_subject
-  before_action :set_material, only: %i[show edit update destroy]
+  before_action :set_material, only: [:show, :edit, :update, :destroy]
 
-INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginner from provided text"
-
-  INSTRUCTIONS_FOR_IMAGES = <<~PROMPT
-    You are an expert AI image prompt engineer. Take the learning materials supplied and summarize them into a clear image prompt for an image that captures the mood and fundamental ideas regarding the subject.
-
-    ## Further Instructions
-    If the subject is about mathematics or abstract learning (like geometry), focus on relevant shapes (like triangles or polynomials).
-    If the subject is within the humanities (like history, politics, literature, geography, sociology), focus on scenes that capture the ambiance of the subject's theme.
-
-    ## Restrictions
-    Return ONLY the final prompt string.
-    Do not include quotes, intro text, or explanations.
-  PROMPT
+INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginner from provided text."
 
   def index
     @materials = @subject.materials # <-- @materials = Material.all would grab *all* materials in the entire database
-  end
-
-  def new
-    # We have to convert params[:content] to a string or ActionText will throw an error
-    @material = Material.new(content: params[:content].to_s)
-    @chat = Chat.find(params[:chat_id])
-    @messages = @chat.messages
-    llm_summary
   end
 
   def create
@@ -61,7 +41,7 @@ INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginne
 
   def destroy
     @material.destroy
-    redirect_to subject_materials_path(@subject), status: :see_other
+    redirect_to subject_path(@subject), status: :see_other
   end
 
   private
@@ -90,6 +70,7 @@ INSTRUCTIONS_FOR_MATERIALS = "generate learning materials for a complete beginne
     html_content = Kramdown::Document.new(summary.content).to_html
     # Link the material content to the html content created by the 'Kramdown' markup gem
     @material.content = html_content
+    @material.summary = summary.content
     # Generate the title of the materials
     @material.generate_title_from_summary(summary.content)
     @title = @material.title
