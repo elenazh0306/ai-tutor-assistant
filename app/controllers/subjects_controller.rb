@@ -1,8 +1,8 @@
 class SubjectsController < ApplicationController
-  before_action :set_subject, only: [:show, :edit, :update, :destroy]
+  before_action :set_subject, only: %i[show edit update destroy]
 
   def index
-    @subjects = Subject.all # Optional: Can be set to 'current_user.subjects' if scoped to logged-in user
+    @subjects = current_user.subjects # Optional: Can be set to 'current_user.subjects' if scoped to logged-in user
   end
 
   def show
@@ -10,7 +10,6 @@ class SubjectsController < ApplicationController
   end
 
   def new
-    create_tutor
     @subject = Subject.new
   end
 
@@ -22,13 +21,6 @@ class SubjectsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
-  end
-
-  def create_tutor
-    @ted = Tutor.create(name: "Ted Lasso")
-    @dumbledore = Tutor.create(name: "Albus Dumbledore")
-    @norbury = Tutor.create(name: "Ms. Norbury")
-
   end
 
   def edit
@@ -50,7 +42,7 @@ class SubjectsController < ApplicationController
   private
 
   def set_subject
-    @subject = Subject.find(params[:id])
+    @subject = current_user.subjects.find(params[:id])
   end
 
   def subject_params
