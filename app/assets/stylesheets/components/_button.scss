@@ -122,3 +122,20 @@ $checkbox-stroke-color: #333 !default;
     text-decoration: line-through;
   }
 }
+
+.button-sign {
+  border: 2px solid black ;
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  transform: rotate(-1.5deg);
+  transition: transform 0.2s ease;
+  background-color: transparent ;
+  font-size: 16px ;
+  font-family: "Sue Ellen Francisco";
+  color: black;
+
+  &:hover {
+    border: 2px solid rgba(255, 0, 0, 0.588)  ;
+
+    color: rgba(255, 0, 0, 0.588);
+  }
+}
