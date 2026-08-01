@@ -14,10 +14,6 @@
   </div>
 </div>
 
-<%= link_to "Back to subject", subject_path(@subject) %>
-<%= link_to "Delete Test", subject_test_path(@subject, @test), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
-<%= button_to "Generate Feedback", test_feedbacks_path(@test), method: :post %>
-
 <!-- loading screen div -->
 <div class="loading-screen">
   <div class="splash-content">
